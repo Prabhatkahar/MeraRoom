@@ -1,0 +1,8 @@
+{
+  "name": "MeraRoom - Smart Rental Marketplace",
+  "description": "A high-performance property rental platform featuring AI-powered room matching and direct owner payments.",
+  "requestFramePermissions": [
+    "camera",
+    "geolocation"
+  ]
+}

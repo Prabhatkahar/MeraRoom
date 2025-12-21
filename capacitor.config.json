@@ -1,0 +1,10 @@
+
+{
+  "appId": "com.meraroom.app",
+  "appName": "MeraRoom",
+  "webDir": "dist",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https"
+  }
+}
