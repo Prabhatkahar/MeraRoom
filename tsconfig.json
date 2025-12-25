@@ -1,29 +1,33 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
-    "experimentalDecorators": true,
-    "useDefineForClassFields": false,
-    "module": "ESNext",
-    "lib": [
-      "ES2022",
-      "DOM",
-      "DOM.Iterable"
-    ],
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "allowJs": false,
     "skipLibCheck": true,
-    "types": [
-      "node"
-    ],
-    "moduleResolution": "bundler",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "resolveJsonModule": true,
     "isolatedModules": true,
-    "moduleDetection": "force",
-    "allowJs": true,
+    "noEmit": true,
     "jsx": "react-jsx",
+    "baseUrl": ".",
+    "types": ["node"],
     "paths": {
-      "@/*": [
-        "./*"
-      ]
-    },
-    "allowImportingTsExtensions": true,
-    "noEmit": true
-  }
+      "react": ["https://esm.sh/react@19.0.0"],
+      "react/*": ["https://esm.sh/react@19.0.0/*"],
+      "react-dom": ["https://esm.sh/react-dom@19.0.0"],
+      "react-dom/*": ["https://esm.sh/react-dom@19.0.0/*"],
+      "react/jsx-runtime": ["https://esm.sh/react@19.0.0/jsx-runtime"],
+      "react-router-dom": ["https://esm.sh/react-router-dom@7.1.1?external=react,react-dom"],
+      "@heroicons/react/24/outline": ["https://esm.sh/@heroicons/react@2.2.0/24/outline/index.js?external=react"],
+      "@heroicons/react/24/solid": ["https://esm.sh/@heroicons/react@2.2.0/24/solid/index.js?external=react"]
+    }
+  },
+  "include": ["**/*.ts", "**/*.tsx", "vite.config.ts"],
+  "exclude": ["node_modules", "dist"]
 }

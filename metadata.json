@@ -3,6 +3,7 @@
   "description": "A high-performance property rental platform featuring AI-powered room matching and direct owner payments.",
   "requestFramePermissions": [
     "camera",
+    "microphone",
     "geolocation"
   ]
 }

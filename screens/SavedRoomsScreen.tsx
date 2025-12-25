@@ -1,15 +1,23 @@
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { HeartIcon } from '@heroicons/react/24/outline';
 import RoomCard from '../components/RoomCard';
 import { MOCK_ROOMS } from '../constants';
 import { useSavedRooms } from '../context/SavedRoomsContext';
 import { Link } from 'react-router-dom';
+import { Room } from '../types';
 
 const SavedRoomsScreen: React.FC = () => {
   const { savedIds } = useSavedRooms();
   
-  const savedRooms = MOCK_ROOMS.filter(room => savedIds.includes(room.id));
+  const allRooms = useMemo(() => {
+    const userPosts = JSON.parse(localStorage.getItem('user_posts') || '[]');
+    return [...userPosts, ...MOCK_ROOMS] as Room[];
+  }, []);
+
+  const savedRooms = useMemo(() => {
+    return allRooms.filter(room => savedIds.includes(room.id));
+  }, [allRooms, savedIds]);
 
   return (
     <div className="flex flex-col animate-fade-in min-h-screen bg-slate-50">

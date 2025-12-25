@@ -21,12 +21,13 @@ export interface Room {
   type: PropertyType;
   rentCycle: RentCycle;
   images: string[];
+  video?: string; // Added: Optional video tour URL or DataURL
   amenities: string[];
   bedrooms: number;
   ownerName: string;
   ownerPhone: string;
   ownerPhoto: string;
-  ownerRating: number; // Added: Numeric rating for sorting
+  ownerRating: number;
   ownerUpi?: string; 
   paymentPhone?: string; 
   createdAt: string;

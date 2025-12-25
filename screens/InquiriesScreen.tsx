@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { 
   EnvelopeIcon, 
@@ -29,7 +28,7 @@ const InquiriesScreen: React.FC = () => {
 
   return (
     <div className="flex flex-col animate-fade-in">
-      <header className="p-6 pb-4 bg-white sticky top-0 z-10">
+      <header className="p-6 pb-4 bg-white sticky top-0 z-10 border-b border-gray-100">
         <h1 className="text-2xl font-black text-gray-900">Inquiries</h1>
         <p className="text-gray-500 text-sm font-medium">Manage your rental communications</p>
       </header>
