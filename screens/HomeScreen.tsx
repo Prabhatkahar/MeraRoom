@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo, useEffect } from 'react';
 import { useTranslation } from '../context/LanguageContext.tsx';
 import { useTheme } from '../context/ThemeContext.tsx';
@@ -23,7 +22,7 @@ import { searchAI } from '../services/geminiService.ts';
 
 const HomeScreen: React.FC = () => {
   const { t } = useTranslation();
-  const { theme, isDarkMode } = useTheme();
+  const { theme } = useTheme();
   const { adBlockActive, toggleAdBlock } = useAdBlock();
   
   const [searchQuery, setSearchQuery] = useState('');
@@ -40,8 +39,13 @@ const HomeScreen: React.FC = () => {
   const [sortBy, setSortBy] = useState<string>('All');
 
   useEffect(() => {
-    const userPosts = JSON.parse(localStorage.getItem('user_posts') || '[]');
-    setLocalRooms(userPosts);
+    try {
+      const userPosts = JSON.parse(localStorage.getItem('user_posts') || '[]');
+      setLocalRooms(Array.isArray(userPosts) ? userPosts : []);
+    } catch (e) {
+      console.warn("MeraRoom: Failed to load local posts", e);
+      setLocalRooms([]);
+    }
     
     const storedName = localStorage.getItem('user_name');
     if (storedName) setUserName(storedName);
@@ -77,7 +81,7 @@ const HomeScreen: React.FC = () => {
     });
 
     if (sortBy === 'Rating') {
-      result = [...result].sort((a, b) => b.ownerRating - a.ownerRating);
+      result = [...result].sort((a, b) => (b.ownerRating || 0) - (a.ownerRating || 0));
     } else if (sortBy === 'PriceLow') {
       result = [...result].sort((a, b) => a.price - b.price);
     } else if (sortBy === 'PriceHigh') {
@@ -94,16 +98,20 @@ const HomeScreen: React.FC = () => {
   };
 
   const handleAiSearch = async () => {
-    if (!navigator.onLine) return;
-    if (!searchQuery) return;
+    if (!navigator.onLine || !searchQuery.trim()) return;
     setIsAiSearching(true);
-    const aiFilters = await searchAI(searchQuery);
-    if (aiFilters) {
-      if (aiFilters.propertyType) setSelectedType(aiFilters.propertyType);
-      if (aiFilters.minPrice) setMinPrice(aiFilters.minPrice);
-      if (aiFilters.maxPrice) setMaxPrice(aiFilters.maxPrice);
+    try {
+      const aiFilters = await searchAI(searchQuery);
+      if (aiFilters) {
+        if (aiFilters.propertyType) setSelectedType(aiFilters.propertyType);
+        if (aiFilters.minPrice !== undefined) setMinPrice(aiFilters.minPrice);
+        if (aiFilters.maxPrice !== undefined) setMaxPrice(aiFilters.maxPrice);
+      }
+    } catch (e) {
+      console.error("MeraRoom AI Search Error:", e);
+    } finally {
+      setIsAiSearching(false);
     }
-    setIsAiSearching(false);
   };
 
   const resetFilters = () => {
